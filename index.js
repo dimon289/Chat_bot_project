@@ -67,7 +67,18 @@ bot.start(async (ctx) => {
     questions: shuffled,
   };
 
-  await ctx.reply("Привіт! Це тест на темперамент. Почнемо!");
+  bot.start(async (ctx) => {
+  try {
+    await ctx.reply("Привіт! Це тест на темперамент. Почнемо!");
+  } catch (error) {
+    if (error.response?.error_code === 403) {
+      console.log("Бот заблокований користувачем");
+      return;
+    }
+
+    console.error(error);
+  }
+});
   sendQuestion(ctx);
 });
 
